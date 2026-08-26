@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartAttend | Intelligent Campus Attendance</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "DM Sans", sans-serif;
+            background: #07131c;
+            color: #f5f1e8;
+            overflow-x: hidden;
+        }
+
+        /* ================= BACKGROUND ================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(76, 184, 169, 0.14), transparent 30%),
+                radial-gradient(circle at 85% 35%, rgba(141, 122, 210, 0.12), transparent 30%),
+                radial-gradient(circle at 50% 100%, rgba(216, 179, 105, 0.08), transparent 35%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            z-index: 100;
+
+            background: rgba(7, 19, 28, 0.72);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(135deg, #64cbbb, #347c78);
+            box-shadow: 0 8px 25px rgba(70, 190, 174, 0.2);
+        }
+
+        .logo-icon span {
+            font-size: 20px;
+        }
+
+        .logo-text {
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text small {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 2px;
+            font-weight: 500;
+            color: #7fbdb6;
+            margin-top: -2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 38px;
+        }
+
+        .nav-links a {
+            color: #aebbc1;
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: white;
+        }
+
+        .login-btn {
+            text-decoration: none;
+            color: white;
+            padding: 11px 21px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.18);
+            background: rgba(255,255,255,0.06);
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .login-btn:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateY(-2px);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 100vh;
+            padding: 150px 7% 80px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 70px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border: 1px solid rgba(255,255,255,0.035);
+            border-radius: 50%;
+            right: -180px;
+            top: 120px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            padding: 8px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(103, 202, 188, 0.2);
+            background: rgba(74, 181, 167, 0.07);
+            color: #7ed5c8;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background: #67d3c1;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #67d3c1;
+            animation: pulse 1.8s infinite;
+        }
+
+        @keyframes pulse {
+            0%,100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: .45;
+                transform: scale(.7);
+            }
+        }
+
+        h1 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(55px, 6vw, 88px);
+            font-weight: 500;
+            line-height: 0.98;
+            letter-spacing: -3px;
+            max-width: 700px;
+        }
+
+        h1 span {
+            color: #78cfc2;
+            font-style: italic;
+        }
+
+        .hero-description {
+            margin-top: 28px;
+            max-width: 570px;
+            color: #9daab0;
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            margin-top: 38px;
+        }
+
+        .primary-btn {
+            padding: 15px 25px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: #06131a;
+            background: #d8e9df;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(200, 230, 218, 0.15);
+        }
+
+        .secondary-btn {
+            padding: 15px 25px;
+            border-radius: 9px;
+            text-decoration: none;
+            color: #e4e9e7;
+            border: 1px solid rgba(255,255,255,0.14);
+            background: rgba(255,255,255,0.035);
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255,255,255,0.08);
+        }
+
+        .trust {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 48px;
+            color: #68777e;
+            font-size: 12px;
+        }
+
+        .trust-line {
+            width: 45px;
+            height: 1px;
+            background: #4b6667;
+        }
+
+        /* ================= FACE SCANNER ================= */
+
+        .scanner-container {
+            position: relative;
+            height: 570px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .scanner-card {
+            width: 390px;
+            height: 490px;
+            border-radius: 28px;
+            position: relative;
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    160deg,
+                    rgba(35, 66, 74, .8),
+                    rgba(9, 26, 35, .95)
+                );
+
+            border: 1px solid rgba(255,255,255,0.13);
+            box-shadow:
+                0 35px 80px rgba(0,0,0,.45),
+                inset 0 1px rgba(255,255,255,.08);
+        }
+
+        .camera-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+            background-size: 45px 45px;
+        }
+
+        .camera-top {
+            position: absolute;
+            top: 22px;
+            left: 23px;
+            right: 23px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 5;
+        }
+
+        .camera-label {
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: rgba(0,0,0,.3);
+            backdrop-filter: blur(10px);
+            font-size: 10px;
+            color: #c4d0ce;
+            letter-spacing: 1px;
+        }
+
+        .camera-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: #80d6c9;
+        }
+
+        /* Face silhouette */
+
+        .face {
+            position: absolute;
+            width: 180px;
+            height: 240px;
+            border-radius: 48% 48% 45% 45%;
+            background:
+                radial-gradient(
+                    ellipse at 50% 35%,
+                    #9b8777 0%,
+                    #776557 48%,
+                    #473c37 100%
+                );
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -48%);
+            opacity: .9;
+
+            box-shadow:
+                0 0 80px rgba(105,190,177,.12);
+        }
+
+        .hair {
+            position: absolute;
+            width: 200px;
+            height: 130px;
+            border-radius: 50% 50% 15% 15%;
+            background: #20292d;
+            left: 50%;
+            top: 82px;
+            transform: translateX(-50%);
+        }
+
+        .eye {
+            position: absolute;
+            width: 35px;
+            height: 5px;
+            border-radius: 50%;
+            background: #263036;
+            top: 105px;
+        }
+
+        .eye.left {
+            left: 35px;
+        }
+
+        .eye.right {
+            right: 35px;
+        }
+
+        .nose {
+            position: absolute;
+            width: 3px;
+            height: 42px;
+            background: rgba(45,35,32,.45);
+            left: 50%;
+            top: 118px;
+        }
+
+        .mouth {
+            position: absolute;
+            width: 40px;
+            height: 10px;
+            border-bottom: 2px solid rgba(45,35,32,.55);
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 174px;
+        }
+
+        /* Scan box */
+
+        .scan-box {
+            position: absolute;
+            width: 235px;
+            height: 285px;
+            border: 1px solid rgba(105, 221, 204, .7);
+            border-radius: 18px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -48%);
+            box-shadow:
+                0 0 35px rgba(74,193,177,.08),
+                inset 0 0 30px rgba(74,193,177,.035);
+        }
+
+        .corner {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            border-color: #75d6c7;
+            border-style: solid;
+        }
+
+        .corner.tl {
+            left: -2px;
+            top: -2px;
+            border-width: 3px 0 0 3px;
+            border-radius: 12px 0 0 0;
+        }
+
+        .corner.tr {
+            right: -2px;
+            top: -2px;
+            border-width: 3px 3px 0 0;
+            border-radius: 0 12px 0 0;
+        }
+
+        .corner.bl {
+            left: -2px;
+            bottom: -2px;
+            border-width: 0 0 3px 3px;
+            border-radius: 0 0 0 12px;
+        }
+
+        .corner.br {
+            right: -2px;
+            bottom: -2px;
+            border-width: 0 3px 3px 0;
+            border-radius: 0 0 12px 0;
+        }
+
+        .scan-line {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #6de0d0;
+            box-shadow: 0 0 15px #6de0d0;
+            animation: scanning 3s infinite ease-in-out;
+        }
+
+        @keyframes scanning {
+            0%,100% {
+                top: 5%;
+                opacity: .2;
+            }
+            50% {
+                top: 93%;
+                opacity: 1;
+            }
+        }
+
+        .recognized {
+            position: absolute;
+            bottom: 22px;
+            left: 22px;
+            right: 22px;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(8,20,27,.76);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .check {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(101,206,190,.12);
+            color: #75d6c7;
+            font-size: 18px;
+        }
+
+        .recognized strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .recognized small {
+            color: #839399;
+            font-size: 10px;
+        }
+
+        /* Floating info cards */
+
+        .floating-card {
+            position: absolute;
+            padding: 15px 18px;
+            border-radius: 15px;
+            background: rgba(14,31,40,.82);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,.1);
+            box-shadow: 0 20px 40px rgba(0,0,0,.25);
+        }
+
+        .floating-card.attendance {
+            left: -10px;
+            top: 110px;
+        }
+
+        .floating-card.students {
+            right: -20px;
+            bottom: 110px;
+        }
+
+        .floating-card .number {
+            font-size: 23px;
+            font-weight: 700;
+            color: #e5eee9;
+        }
+
+        .floating-card .label {
+            color: #7f9197;
+            font-size: 10px;
+            margin-top: 3px;
+        }
+
+        .mini-progress {
+            width: 80px;
+            height: 3px;
+            background: rgba(255,255,255,.08);
+            margin-top: 9px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .mini-progress span {
+            display: block;
+            width: 92%;
+            height: 100%;
+            background: #67cbbd;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            padding: 110px 7%;
+            background: #f2eee5;
+            color: #17282e;
+            position: relative;
+        }
+
+        .section-heading {
+            max-width: 650px;
+            margin-bottom: 60px;
+        }
+
+        .section-heading .small-title {
+            color: #4b8d86;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .section-heading h2 {
+            font-family: "Playfair Display", serif;
+            font-size: clamp(40px, 5vw, 65px);
+            font-weight: 500;
+            line-height: 1.05;
+            margin-top: 13px;
+            letter-spacing: -2px;
+        }
+
+        .section-heading p {
+            margin-top: 18px;
+            color: #687579;
+            line-height: 1.7;
+            max-width: 550px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 18px;
+        }
+
+        .feature {
+            min-height: 250px;
+            padding: 30px;
+            border-radius: 20px;
+            background: #e8e4d9;
+            border: 1px solid rgba(21,43,48,.07);
+            transition: .4s;
+        }
+
+        .feature:hover {
+            transform: translateY(-7px);
+            background: #e2ded2;
+        }
+
+        .feature-icon {
+            width: 47px;
+            height: 47px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #d4e5de;
+            font-size: 20px;
+            margin-bottom: 55px;
+        }
+
+        .feature h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            color: #718087;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            padding: 35px 7%;
+            background: #061119;
+            color: #708087;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+        }
+
+        footer strong {
+            color: #c4d2ce;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media(max-width: 950px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 130px;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons,
+            .trust {
+                justify-content: center;
+            }
+
+            .scanner-container {
+                margin-top: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            nav {
+                padding: 0 5%;
+            }
+
+            .hero {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            h1 {
+                font-size: 53px;
+            }
+
+            .scanner-card {
+                width: 330px;
+                height: 440px;
+            }
+
+            .floating-card {
+                display: none;
+            }
+
+            .features {
+                padding: 80px 5%;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav>
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                <span>⌁</span>
+            </div>
+
+            <div class="logo-text">
+                SmartAttend
+                <small>CAMPUS INTELLIGENCE</small>
+            </div>
+
+        </div>
+
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#">How it works</a>
+            <a href="#">About</a>
+        </div>
+
+        <a href="#" class="login-btn">
+            Admin Portal →
+        </a>
+
+    </nav>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main class="hero" id="home">
+
+        <section class="hero-content">
+
+            <div class="eyebrow">
+                <span class="live-dot"></span>
+                Intelligent Campus System
+            </div>
+
+            <h1>
+                Attendance,
+                <br>
+                <span>reimagined.</span>
+            </h1>
+
+            <p class="hero-description">
+                A smarter way to manage classroom attendance.
+                SmartAttend uses real-time facial recognition to
+                identify students, record attendance instantly,
+                and turn everyday classroom data into meaningful insights.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#" class="primary-btn">
+                    Start Attendance&nbsp; →
+                </a>
+
+                <a href="#features" class="secondary-btn">
+                    Explore the system
+                </a>
+
+            </div>
+
+            <div class="trust">
+
+                <div class="trust-line"></div>
+
+                <span>
+                    Designed for modern college campuses
+                </span>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FACE RECOGNITION UI ================= -->
+
+        <section class="scanner-container">
+
+            <div class="floating-card attendance">
+
+                <div class="number">92%</div>
+
+                <div class="label">
+                    TODAY'S ATTENDANCE
+                </div>
+
+                <div class="mini-progress">
+                    <span></span>
+                </div>
+
+            </div>
+
+
+            <div class="scanner-card">
+
+                <div class="camera-grid"></div>
+
+                <div class="camera-top">
+
+                    <div class="camera-label">
+                        LIVE CAMERA
+                    </div>
+
+                    <div class="camera-status">
+                        <span class="live-dot"></span>
+                        SCANNING
+                    </div>
+
+                </div>
+
+
+                <!-- Face -->
+
+                <div class="face">
+
+                    <div class="hair"></div>
+
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+
+                    <div class="nose"></div>
+
+                    <div class="mouth"></div>
+
+                </div>
+
+
+                <!-- Face recognition frame -->
+
+                <div class="scan-box">
+
+                    <div class="corner tl"></div>
+                    <div class="corner tr"></div>
+                    <div class="corner bl"></div>
+                    <div class="corner br"></div>
+
+                    <div class="scan-line"></div>
+
+                </div>
+
+
+                <!-- Recognition result -->
+
+                <div class="recognized">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+                    <div>
+                        <strong>Face recognized</strong>
+
+                        <small>
+                            Attendance marked • 09:02 AM
+                        </small>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card students">
+
+                <div class="number">48</div>
+
+                <div class="label">
+                    STUDENTS PRESENT
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FEATURES ================= -->
+
+    <section class="features" id="features">
+
+        <div class="section-heading">
+
+            <div class="small-title">
+                Built for the campus
+            </div>
+
+            <h2>
+                Less paperwork.
+                <br>
+                More learning.
+            </h2>
+
+            <p>
+                Everything your institution needs to make attendance
+                faster, more accurate and easier to manage.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ◉
+                </div>
+
+                <h3>
+                    Face Recognition
+                </h3>
+
+                <p>
+                    Identify registered students through
+                    real-time facial recognition without
+                    manual roll calls.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ⚡
+                </div>
+
+                <h3>
+                    Instant Attendance
+                </h3>
+
+                <p>
+                    Automatically record attendance with
+                    the student's identity, date and exact
+                    recognition time.
+                </p>
+
+            </div>
+
+
+            <div class="feature">
+
+                <div class="feature-icon">
+                    ↗
+                </div>
+
+                <h3>
+                    Smart Analytics
+                </h3>
+
+                <p>
+                    Monitor attendance patterns and generate
+                    meaningful reports for faculty and
+                    administrators.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div>
+            <strong>SmartAttend</strong>
+            &nbsp; • &nbsp; Intelligent Campus Attendance
+        </div>
+
+        <div>
+            © 2026 Campus Technology Project
+        </div>
+
+    </footer>
+
+
+</body>
+</html>
