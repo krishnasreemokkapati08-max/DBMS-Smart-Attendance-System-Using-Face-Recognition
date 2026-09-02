@@ -730,6 +730,150 @@
             }
         }
 
+
+        /* ================= FUNCTIONAL ATTENDANCE PAGE ================= */
+        button { font-family: inherit; cursor: pointer; }
+
+        .attendance-page {
+            display: none;
+            min-height: 100vh;
+            padding: 125px 7% 90px;
+            background: #07131c;
+        }
+        .attendance-page.active { display: block; animation: pageIn .45s ease; }
+        @keyframes pageIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .attendance-shell { max-width: 1250px; margin: auto; }
+        .attendance-header {
+            display: flex; justify-content: space-between; align-items: end;
+            gap: 30px; margin-bottom: 38px;
+        }
+        .attendance-header h2 {
+            font-family: "Playfair Display", serif; font-size: clamp(40px,5vw,64px);
+            font-weight: 500; line-height: 1; margin-top: 10px;
+        }
+        .attendance-header p { color:#91a0a6; margin-top:15px; }
+        .small-title { color:#4b8d86; text-transform:uppercase; letter-spacing:2px; font-size:11px; font-weight:700; }
+        .back-btn, .clear-btn, .secondary-action {
+            border:1px solid rgba(255,255,255,.13); background:rgba(255,255,255,.05);
+            color:#dce6e3; border-radius:10px; padding:12px 17px;
+        }
+        .back-btn:hover, .secondary-action:hover, .clear-btn:hover { background:rgba(255,255,255,.1); }
+
+        .attendance-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:22px; }
+        .camera-panel, .roster-panel, .dash-stat {
+            border:1px solid rgba(255,255,255,.09); background:rgba(255,255,255,.035);
+            border-radius:22px;
+        }
+        .camera-panel { padding:18px; }
+        .panel-top { display:flex; justify-content:space-between; color:#a9b7bb; font-size:11px; letter-spacing:1.5px; padding:5px 5px 15px; }
+        .camera-live { color:#78d5c8; display:flex; align-items:center; gap:7px; }
+        .camera-live i { width:7px; height:7px; background:#67d3c1; border-radius:50%; box-shadow:0 0 10px #67d3c1; }
+
+        .real-camera {
+            position:absolute; inset:0; width:100%; height:100%;
+            object-fit:cover; display:none; transform:scaleX(-1);
+            background:#07131c;
+        }
+        .attendance-camera.camera-active .real-camera { display:block; }
+        .attendance-camera.camera-active .camera-face { display:none; }
+        .camera-error {
+            position:absolute; top:55px; left:20px; right:20px; z-index:8;
+            padding:10px 12px; border-radius:10px; background:rgba(80,20,20,.82);
+            color:#ffdede; font-size:11px; text-align:center; display:none;
+        }
+        .attendance-camera.camera-error-state .camera-error { display:block; }
+        .attendance-camera {
+            height:490px; border-radius:17px; position:relative; overflow:hidden;
+            background:linear-gradient(145deg,#213f48,#081b25); display:flex; align-items:center; justify-content:center;
+            border:1px solid rgba(255,255,255,.08);
+        }
+        .attendance-camera .camera-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px); background-size:45px 45px; }
+        .camera-face {
+            position:absolute; width:170px; height:225px; border-radius:48% 48% 45% 45%;
+            background:radial-gradient(ellipse at 50% 35%,#a18c7c,#715e52 55%,#443935);
+            opacity:.88; box-shadow:0 0 70px rgba(105,190,177,.14);
+        }
+        .camera-hair { position:absolute; width:190px; height:125px; border-radius:50% 50% 15% 15%; background:#20292d; left:50%; top:-2px; transform:translateX(-50%); }
+        .camera-eye { position:absolute; width:33px; height:5px; border-radius:50%; background:#263036; top:99px; }
+        .camera-eye.left { left:32px; } .camera-eye.right { right:32px; }
+        .camera-nose { position:absolute; width:3px; height:39px; background:rgba(45,35,32,.45); left:50%; top:112px; }
+        .camera-mouth { position:absolute; width:38px; height:10px; border-bottom:2px solid rgba(45,35,32,.55); border-radius:50%; left:50%; transform:translateX(-50%); top:166px; }
+        .attendance-scan-box { position:absolute; width:230px; height:285px; border:1px solid rgba(105,221,204,.7); border-radius:18px; box-shadow:0 0 35px rgba(74,193,177,.08),inset 0 0 30px rgba(74,193,177,.035); }
+        .attendance-scan-box .a { position:absolute; width:24px; height:24px; border-color:#75d6c7; border-style:solid; }
+        .attendance-scan-box .tl { left:-2px; top:-2px; border-width:3px 0 0 3px; border-radius:12px 0 0 0; }
+        .attendance-scan-box .tr { right:-2px; top:-2px; border-width:3px 3px 0 0; border-radius:0 12px 0 0; }
+        .attendance-scan-box .bl { left:-2px; bottom:-2px; border-width:0 0 3px 3px; border-radius:0 0 0 12px; }
+        .attendance-scan-box .br { right:-2px; bottom:-2px; border-width:0 3px 3px 0; border-radius:0 0 12px 0; }
+        .attendance-scan-line { position:absolute; left:0; right:0; height:2px; background:#6de0d0; box-shadow:0 0 15px #6de0d0; animation:attendanceScan 2.8s infinite ease-in-out; }
+        @keyframes attendanceScan { 0%,100% { top:5%; opacity:.2; } 50% { top:93%; opacity:1; } }
+        .camera-message { position:absolute; bottom:17px; left:17px; right:17px; padding:11px; border-radius:10px; background:rgba(5,16,22,.72); color:#a9b8bb; text-align:center; font-size:11px; backdrop-filter:blur(10px); }
+
+        .camera-actions { display:flex; gap:10px; margin-top:15px; }
+        .scan-btn, .save-btn { border:0; border-radius:10px; background:#d8e9df; color:#06131a; font-weight:700; padding:14px 20px; }
+        .scan-btn { flex:1; }
+        .scan-btn:hover, .save-btn:hover { transform:translateY(-2px); box-shadow:0 12px 25px rgba(200,230,218,.12); }
+        .secondary-action { padding:13px 20px; }
+
+        .attendance-side { display:flex; flex-direction:column; gap:15px; }
+        .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+        .dash-stat { padding:20px; }
+        .dash-stat span { display:block; color:#7f9197; font-size:10px; text-transform:uppercase; letter-spacing:1px; }
+        .dash-stat strong { display:block; font-size:30px; margin-top:8px; }
+        .dash-stat small { color:#697a80; font-size:10px; }
+
+        .roster-panel { min-height:370px; padding:20px; }
+        .roster-head { display:flex; justify-content:space-between; align-items:center; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,.07); }
+        .roster-head strong { display:block; font-size:15px; } .roster-head small { color:#718187; display:block; margin-top:5px; }
+        .clear-btn { padding:7px 12px; font-size:11px; }
+        .student-list { max-height:300px; overflow:auto; padding-top:8px; }
+        .student-item { display:flex; align-items:center; justify-content:space-between; padding:13px 5px; border-bottom:1px solid rgba(255,255,255,.05); }
+        .student-info { display:flex; align-items:center; gap:11px; }
+        .student-avatar { width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(103,203,189,.12); color:#75d6c7; font-size:12px; }
+        .student-name { font-size:13px; } .student-time { font-size:10px; color:#718187; margin-top:3px; }
+        .present-badge { font-size:9px; color:#78d5c8; border:1px solid rgba(120,213,200,.18); padding:5px 8px; border-radius:20px; }
+        .empty-state { min-height:275px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; color:#73858b; gap:8px; }
+        .empty-state span { width:45px; height:45px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(103,203,189,.08); color:#75d6c7; font-size:19px; margin-bottom:4px; }
+        .empty-state strong { color:#b8c4c6; font-size:13px; } .empty-state small { font-size:10px; }
+        .save-btn { width:100%; } .save-status { text-align:center; min-height:16px; color:#78d5c8; font-size:11px; }
+
+        .info-section { padding:110px 7%; background:#f2eee5; color:#17282e; }
+        .info-inner { max-width:1200px; margin:auto; }
+        .info-section h2, .about-section h2 { font-family:"Playfair Display",serif; font-size:clamp(40px,5vw,65px); font-weight:500; line-height:1.05; margin:12px 0 45px; letter-spacing:-2px; }
+        .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+        .steps > div { padding:28px; border-radius:18px; background:#e8e4d9; }
+        .steps b { color:#4b8d86; font-size:11px; letter-spacing:1px; }
+        .steps strong { display:block; margin-top:45px; font-size:18px; } .steps p { color:#718087; line-height:1.6; font-size:13px; margin-top:9px; }
+        .about-section { padding:110px 7%; background:#07131c; }
+        .about-section > div { max-width:760px; }
+        .about-section h2 { color:#f5f1e8; margin-bottom:18px; }
+        .about-section p { color:#91a0a6; line-height:1.8; max-width:650px; }
+
+        @media(max-width:950px) {
+            .attendance-grid { grid-template-columns:1fr; }
+            .attendance-header { align-items:start; flex-direction:column; }
+            .steps { grid-template-columns:1fr; }
+        }
+        @media(max-width:600px) {
+            .attendance-page { padding-left:5%; padding-right:5%; }
+            .real-camera {
+            position:absolute; inset:0; width:100%; height:100%;
+            object-fit:cover; display:none; transform:scaleX(-1);
+            background:#07131c;
+        }
+        .attendance-camera.camera-active .real-camera { display:block; }
+        .attendance-camera.camera-active .camera-face { display:none; }
+        .camera-error {
+            position:absolute; top:55px; left:20px; right:20px; z-index:8;
+            padding:10px 12px; border-radius:10px; background:rgba(80,20,20,.82);
+            color:#ffdede; font-size:11px; text-align:center; display:none;
+        }
+        .attendance-camera.camera-error-state .camera-error { display:block; }
+        .attendance-camera { height:400px; }
+            .stat-row { grid-template-columns:1fr; }
+            .camera-actions { flex-direction:column; }
+        }
+
     </style>
 </head>
 
@@ -755,8 +899,8 @@
         <div class="nav-links">
             <a href="#home">Home</a>
             <a href="#features">Features</a>
-            <a href="#">How it works</a>
-            <a href="#">About</a>
+            <a href="#how-it-works">How it works</a>
+            <a href="#about">About</a>
         </div>
 
         <a href="#" class="login-btn">
@@ -792,9 +936,7 @@
 
             <div class="hero-buttons">
 
-                <a href="#" class="primary-btn">
-                    Start Attendance&nbsp; →
-                </a>
+                <button type="button" class="primary-btn" id="startAttendanceBtn">Start Attendance&nbsp; →</button>
 
                 <a href="#features" class="secondary-btn">
                     Explore the system
@@ -1007,6 +1149,117 @@
     </section>
 
 
+
+    <!-- ================= ATTENDANCE DASHBOARD ================= -->
+    <section class="attendance-page" id="attendancePage" aria-hidden="true">
+        <div class="attendance-shell">
+            <div class="attendance-header">
+                <div>
+                    <div class="small-title">LIVE ATTENDANCE</div>
+                    <h2>Mark today's attendance.</h2>
+                    <p>Use the camera to recognize students and record their presence.</p>
+                </div>
+                <button type="button" class="back-btn" id="closeAttendanceBtn">← Back to Home</button>
+            </div>
+
+            <div class="attendance-grid">
+                <div class="camera-panel">
+                    <div class="panel-top">
+                        <span>LIVE CAMERA</span>
+                        <span class="camera-live"><i></i> READY</span>
+                    </div>
+
+                    <div class="attendance-camera">
+                        <video id="realCamera" class="real-camera" autoplay playsinline muted></video>
+                        <div class="camera-grid"></div>
+                        <div class="camera-face">
+                            <div class="camera-hair"></div>
+                            <div class="camera-eye left"></div>
+                            <div class="camera-eye right"></div>
+                            <div class="camera-nose"></div>
+                            <div class="camera-mouth"></div>
+                        </div>
+                        <div class="attendance-scan-box">
+                            <span class="a tl"></span><span class="a tr"></span>
+                            <span class="a bl"></span><span class="a br"></span>
+                            <div class="attendance-scan-line"></div>
+                        </div>
+                        <div class="camera-error">Camera access is required for live scanning.</div>
+                        <div class="camera-message" id="cameraMessage">Position a student inside the frame</div>
+                    </div>
+
+                    <div class="camera-actions">
+                        <button type="button" class="scan-btn" id="scanBtn">Scan Student</button>
+                        <button type="button" class="secondary-action" id="stopBtn">Stop Camera</button>
+                    </div>
+                </div>
+
+                <div class="attendance-side">
+                    <div class="stat-row">
+                        <div class="dash-stat">
+                            <span>Present</span>
+                            <strong id="presentCount">0</strong>
+                            <small>students</small>
+                        </div>
+                        <div class="dash-stat">
+                            <span>Absent</span>
+                            <strong id="absentCount">48</strong>
+                            <small>students</small>
+                        </div>
+                        <div class="dash-stat">
+                            <span>Rate</span>
+                            <strong id="rateCount">0%</strong>
+                            <small>today</small>
+                        </div>
+                    </div>
+
+                    <div class="roster-panel">
+                        <div class="roster-head">
+                            <div>
+                                <strong>Attendance Register</strong>
+                                <small>Today • <span id="dateText"></span></small>
+                            </div>
+                            <button type="button" class="clear-btn" id="clearBtn">Clear</button>
+                        </div>
+
+                        <div class="student-list" id="studentList">
+                            <div class="empty-state" id="emptyState">
+                                <span>✓</span>
+                                <strong>No attendance marked yet</strong>
+                                <small>Click “Scan Student” to record attendance.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="button" class="save-btn" id="saveBtn">Save Attendance</button>
+                    <div class="save-status" id="saveStatus"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="info-section" id="how-it-works">
+        <div class="info-inner">
+            <div class="small-title">HOW IT WORKS</div>
+            <h2>Three steps. Zero roll calls.</h2>
+            <div class="steps">
+                <div><b>01</b><strong>Start Attendance</strong><p>Open the live attendance workspace from the home page.</p></div>
+                <div><b>02</b><strong>Scan Students</strong><p>Recognize each student and instantly add them to today's register.</p></div>
+                <div><b>03</b><strong>Save the Register</strong><p>Review the present count and save the completed attendance.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ABOUT ================= -->
+    <section class="about-section" id="about">
+        <div>
+            <div class="small-title">ABOUT SMARTATTEND</div>
+            <h2>Attendance, without the paperwork.</h2>
+            <p>SmartAttend is a campus attendance interface designed around quick recognition, clear records and simple analytics.</p>
+        </div>
+    </section>
+
     <!-- ================= FOOTER ================= -->
 
     <footer>
@@ -1022,6 +1275,215 @@
 
     </footer>
 
+
+
+    <script>
+    (() => {
+        const home = document.querySelector('main.hero');
+        const features = document.querySelector('#features');
+        const attendancePage = document.querySelector('#attendancePage');
+        const startBtn = document.querySelector('#startAttendanceBtn');
+        const closeBtn = document.querySelector('#closeAttendanceBtn');
+        const scanBtn = document.querySelector('#scanBtn');
+        const stopBtn = document.querySelector('#stopBtn');
+        const clearBtn = document.querySelector('#clearBtn');
+        const saveBtn = document.querySelector('#saveBtn');
+        const saveStatus = document.querySelector('#saveStatus');
+        const studentList = document.querySelector('#studentList');
+        const emptyState = document.querySelector('#emptyState');
+        const presentCount = document.querySelector('#presentCount');
+        const absentCount = document.querySelector('#absentCount');
+        const rateCount = document.querySelector('#rateCount');
+        const cameraMessage = document.querySelector('#cameraMessage');
+        const dateText = document.querySelector('#dateText');
+
+        const demoStudents = [
+            "Aarav Kumar", "Ananya Reddy", "Arjun Rao", "Bhavya Singh",
+            "Charan Teja", "Diya Sharma", "Ishaan Verma", "Kavya Nair",
+            "Manoj Patel", "Nisha Reddy", "Rahul Das", "Sneha Rao",
+            "Varun Kumar", "Yashika Gupta", "Zoya Khan"
+        ];
+
+        let attendance = JSON.parse(localStorage.getItem('smartAttendRecords') || '[]');
+        const totalStudents = 48;
+
+        dateText.textContent = new Date().toLocaleDateString(undefined, {
+            day:'2-digit', month:'short', year:'numeric'
+        });
+
+        function updateStats() {
+            const count = attendance.length;
+            presentCount.textContent = count;
+            absentCount.textContent = Math.max(totalStudents - count, 0);
+            rateCount.textContent = Math.round((count / totalStudents) * 100) + '%';
+        }
+
+        function initials(name) {
+            return name.split(' ').map(x => x[0]).slice(0,2).join('');
+        }
+
+        function renderAttendance() {
+            updateStats();
+            if (!attendance.length) {
+                emptyState.style.display = 'flex';
+                studentList.innerHTML = '';
+                studentList.appendChild(emptyState);
+                return;
+            }
+            emptyState.style.display = 'none';
+            studentList.innerHTML = '';
+            attendance.forEach(record => {
+                const item = document.createElement('div');
+                item.className = 'student-item';
+                item.innerHTML = `
+                    <div class="student-info">
+                        <div class="student-avatar">${initials(record.name)}</div>
+                        <div>
+                            <div class="student-name">${record.name}</div>
+                            <div class="student-time">${record.time}</div>
+                        </div>
+                    </div>
+                    <span class="present-badge">PRESENT</span>
+                `;
+                studentList.appendChild(item);
+            });
+        }
+
+        async function openAttendance() {
+            attendancePage.classList.add('active');
+            attendancePage.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('attendance-open');
+            renderAttendance();
+            saveStatus.textContent = '';
+
+            // Immediately move into the scanning workspace and request the camera.
+            attendancePage.scrollIntoView({behavior:'smooth', block:'start'});
+            setTimeout(() => startRealCamera(), 250);
+        }
+
+        function closeAttendance() {
+            stopRealCamera();
+            attendancePage.classList.remove('active');
+            attendancePage.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('attendance-open');
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        startBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openAttendance();
+        });
+        closeBtn.addEventListener('click', closeAttendance);
+
+        const camera = document.getElementById('realCamera');
+        const cameraBox = document.querySelector('.attendance-camera');
+        let cameraStream = null;
+
+        async function startRealCamera() {
+            cameraBox.classList.remove('camera-error-state');
+            cameraMessage.textContent = 'Requesting camera access…';
+
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                cameraBox.classList.add('camera-error-state');
+                cameraMessage.textContent = 'Camera access is not supported in this browser.';
+                return false;
+            }
+
+            try {
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user', width: { ideal: 1280 }, height: { ideal: 720 } },
+                    audio: false
+                });
+                camera.srcObject = cameraStream;
+                cameraBox.classList.add('camera-active');
+                cameraMessage.textContent = 'Camera ready — position the student inside the frame';
+                return true;
+            } catch (err) {
+                cameraBox.classList.add('camera-error-state');
+                cameraMessage.textContent =
+                    err.name === 'NotAllowedError'
+                        ? 'Camera permission was denied. Allow camera access and try again.'
+                        : 'Unable to open the camera. Check that a camera is connected.';
+                return false;
+            }
+        }
+
+        function stopRealCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            camera.srcObject = null;
+            cameraBox.classList.remove('camera-active');
+        }
+
+        scanBtn.addEventListener('click', async () => {
+            const opened = cameraStream || await startRealCamera();
+            if (!opened) return;
+
+            scanBtn.disabled = true;
+            scanBtn.textContent = 'Scanning…';
+            cameraMessage.textContent = 'Scanning the student…';
+
+            setTimeout(() => {
+                const available = demoStudents.find(name => !attendance.some(r => r.name === name));
+                const name = available || `Student ${attendance.length + 1}`;
+                const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+                attendance.push({name, time});
+                localStorage.setItem('smartAttendRecords', JSON.stringify(attendance));
+                renderAttendance();
+                cameraMessage.textContent = `${name} recognized • Attendance marked`;
+                scanBtn.disabled = false;
+                scanBtn.textContent = 'Scan Student';
+            }, 1800);
+        });
+
+        stopBtn.addEventListener('click', () => {
+            stopRealCamera();
+            cameraMessage.textContent = 'Camera stopped. Click “Scan Student” to open it again.';
+        });
+
+        clearBtn.addEventListener('click', () => {
+            attendance = [];
+            localStorage.removeItem('smartAttendRecords');
+            renderAttendance();
+            cameraMessage.textContent = 'Attendance register cleared';
+            saveStatus.textContent = '';
+        });
+
+        saveBtn.addEventListener('click', () => {
+            localStorage.setItem('smartAttendRecords', JSON.stringify(attendance));
+            saveStatus.textContent = attendance.length
+                ? `✓ Attendance saved successfully — ${attendance.length} present`
+                : '✓ Empty attendance register saved';
+            cameraMessage.textContent = 'Attendance saved successfully';
+        });
+
+        // Keep front-page navigation working.
+        document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
+            link.addEventListener('click', e => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    closeAttendance();
+                    setTimeout(() => target.scrollIntoView({behavior:'smooth'}), 50);
+                }
+            });
+        });
+
+        document.querySelector('.secondary-btn')?.addEventListener('click', () => {
+            setTimeout(() => document.querySelector('#features')?.scrollIntoView({behavior:'smooth'}), 0);
+        });
+
+        // Admin Portal opens the same attendance workspace.
+        document.querySelector('.login-btn')?.addEventListener('click', e => {
+            e.preventDefault();
+            openAttendance();
+        });
+
+        renderAttendance();
+    })();
+    </script>
 
 </body>
 </html>
