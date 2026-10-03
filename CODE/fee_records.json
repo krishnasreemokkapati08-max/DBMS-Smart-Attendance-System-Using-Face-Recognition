@@ -1,0 +1,152 @@
+[
+  {
+    "studentId": "STU001",
+    "rollNumber": "101",
+    "studentName": "Aarav Kumar",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 107000,
+    "pendingAmount": 18000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU002",
+    "rollNumber": "102",
+    "studentName": "Ananya Reddy",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU003",
+    "rollNumber": "103",
+    "studentName": "Arjun Rao",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 119000,
+    "pendingAmount": 6000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU004",
+    "rollNumber": "104",
+    "studentName": "Bhavya Singh",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU005",
+    "rollNumber": "105",
+    "studentName": "Charan Teja",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU006",
+    "rollNumber": "106",
+    "studentName": "Diya Sharma",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU007",
+    "rollNumber": "107",
+    "studentName": "Ishaan Verma",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 121000,
+    "pendingAmount": 4000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU008",
+    "rollNumber": "108",
+    "studentName": "Kavya Nair",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU009",
+    "rollNumber": "109",
+    "studentName": "Manoj Patel",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 115000,
+    "pendingAmount": 10000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU010",
+    "rollNumber": "110",
+    "studentName": "Nisha Reddy",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 123000,
+    "pendingAmount": 2000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU011",
+    "rollNumber": "111",
+    "studentName": "Rahul Singh",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU012",
+    "rollNumber": "112",
+    "studentName": "Sneha Kapoor",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 120000,
+    "pendingAmount": 5000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU013",
+    "rollNumber": "113",
+    "studentName": "Vivek Reddy",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  },
+  {
+    "studentId": "STU014",
+    "rollNumber": "114",
+    "studentName": "Meera Joshi",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 122000,
+    "pendingAmount": 3000,
+    "status": "Pending"
+  },
+  {
+    "studentId": "STU015",
+    "rollNumber": "115",
+    "studentName": "Aditya Rao",
+    "academicYear": "2026-27",
+    "totalFee": 125000,
+    "paidAmount": 125000,
+    "pendingAmount": 0,
+    "status": "Paid"
+  }
+]
