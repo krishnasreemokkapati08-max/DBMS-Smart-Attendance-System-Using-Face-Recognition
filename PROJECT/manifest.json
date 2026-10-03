@@ -1,0 +1,16 @@
+{
+  "database": "SmartAttendDB",
+  "collections": {
+    "admins": 5,
+    "students": 15,
+    "courses": 5,
+    "classrooms": 5,
+    "class_sessions": 10,
+    "attendance": 15,
+    "face_profiles": 15,
+    "verification_audits": 8,
+    "fee_records": 15,
+    "notifications": 6
+  },
+  "source": "Pasted text.txt"
+}
